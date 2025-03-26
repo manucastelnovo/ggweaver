@@ -3,7 +3,7 @@ import { useState } from "react";
 import * as XLSX from "xlsx";
 
 export default function ClienteForm() {
-  const [tipoPersona, setTipoPersona] = useState("");
+  const [tipoPersona, setTipoPersona] = useState("Fisica");
 
   const handleTipoPersonaChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -43,7 +43,7 @@ export default function ClienteForm() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-lg">
-          <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-white">
+          <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-black">
             Formulario de Captura de Datos del Cliente
           </h2>
         </div>
@@ -52,14 +52,14 @@ export default function ClienteForm() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Datos del Cliente */}
             <fieldset className="p-4 border border-gray-700 rounded-md">
-              <legend className="text-lg font-medium text-white">
+              <legend className="text-lg font-medium text-black">
                 Datos del Cliente
               </legend>
 
               <div className="mt-4">
                 <label
                   htmlFor="nombre_apellido"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Nombre y Apellido
                 </label>
@@ -69,7 +69,7 @@ export default function ClienteForm() {
                     name="nombre_apellido"
                     type="text"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -77,7 +77,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="cedula_identidad"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Cédula de Identidad
                 </label>
@@ -88,7 +88,7 @@ export default function ClienteForm() {
                     type="text"
                     pattern="\d*"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -96,7 +96,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="edad"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Edad
                 </label>
@@ -106,7 +106,7 @@ export default function ClienteForm() {
                     name="edad"
                     type="number"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -114,7 +114,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="tipo_persona"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Tipo de Persona
                 </label>
@@ -122,11 +122,11 @@ export default function ClienteForm() {
                   <select
                     id="tipo_persona"
                     name="tipo_persona"
+                    defaultValue={"Fisica"}
                     onChange={handleTipoPersonaChange}
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 border border-gray-400 outline-white/10  focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   >
-                    <option value="">Seleccione</option>
                     <option value="Fisica">Fisica</option>
                     <option value="Juridica">Juridica</option>
                   </select>
@@ -137,16 +137,17 @@ export default function ClienteForm() {
                 <div className="mt-4">
                   <label
                     htmlFor="perfil_comercial"
-                    className="block text-sm font-medium text-white"
+                    className="block text-sm font-medium text-black"
                   >
                     Perfil Comercial
                   </label>
                   <div className="mt-2">
                     <select
+                      defaultValue={"Asalariado"}
                       id="perfil_comercial"
                       name="perfil_comercial"
                       required={tipoPersona === "Fisica"}
-                      className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                     >
                       <option value="">Seleccione</option>
                       <option value="Asalariado">Asalariado</option>
@@ -159,14 +160,14 @@ export default function ClienteForm() {
 
             {/* Datos de Evaluacion */}
             <fieldset className="p-4 border border-gray-700 rounded-md">
-              <legend className="text-lg font-medium text-white">
+              <legend className="text-lg font-medium text-black">
                 Datos de Evaluación
               </legend>
 
               <div className="mt-4">
                 <label
                   htmlFor="ingresos"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Ingresos
                 </label>
@@ -176,7 +177,7 @@ export default function ClienteForm() {
                     name="ingresos"
                     type="number"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -184,7 +185,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="antiguedad_laboral"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Antigüedad Laboral
                 </label>
@@ -193,7 +194,7 @@ export default function ClienteForm() {
                     id="antiguedad_laboral"
                     name="antiguedad_laboral"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   >
                     <option value="">Seleccione</option>
                     <option value="6 meses a un año">6 meses a un año</option>
@@ -207,7 +208,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="posee_bienes"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Posee Bienes
                 </label>
@@ -216,7 +217,7 @@ export default function ClienteForm() {
                     id="posee_bienes"
                     name="posee_bienes"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   >
                     <option value="">Seleccione</option>
                     <option value="No">No</option>
@@ -232,7 +233,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="empresa"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Empresa
                 </label>
@@ -242,7 +243,7 @@ export default function ClienteForm() {
                     name="empresa"
                     type="text"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -250,7 +251,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="faja_scoring_inforconf"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Faja Scoring Inforconf
                 </label>
@@ -260,7 +261,7 @@ export default function ClienteForm() {
                     name="faja_scoring_inforconf"
                     type="text"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -268,14 +269,14 @@ export default function ClienteForm() {
 
             {/* Datos Operacion */}
             <fieldset className="p-4 border border-gray-700 rounded-md">
-              <legend className="text-lg font-medium text-white">
+              <legend className="text-lg font-medium text-black">
                 Datos Operación
               </legend>
 
               <div className="mt-4">
                 <label
                   htmlFor="producto"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Producto
                 </label>
@@ -284,7 +285,7 @@ export default function ClienteForm() {
                     id="producto"
                     name="producto"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   >
                     <option value="">Seleccione</option>
                     <option value="producto1">producto1</option>
@@ -296,7 +297,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="monto_solicitado"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Monto Solicitado
                 </label>
@@ -306,7 +307,7 @@ export default function ClienteForm() {
                     name="monto_solicitado"
                     type="number"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -314,7 +315,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="cuota"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Cuota
                 </label>
@@ -324,7 +325,7 @@ export default function ClienteForm() {
                     name="cuota"
                     type="number"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -332,7 +333,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="plazo_meses"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Plazo (Meses)
                 </label>
@@ -342,7 +343,7 @@ export default function ClienteForm() {
                     name="plazo_meses"
                     type="number"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -350,7 +351,7 @@ export default function ClienteForm() {
               <div className="mt-4">
                 <label
                   htmlFor="tipo_garantia"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-black"
                 >
                   Tipo de Garantía
                 </label>
@@ -359,7 +360,7 @@ export default function ClienteForm() {
                     id="tipo_garantia"
                     name="tipo_garantia"
                     required
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
                   >
                     <option value="">Seleccione</option>
                     <option value="ASF">ASF</option>
@@ -373,21 +374,21 @@ export default function ClienteForm() {
 
             {/* input para cargar excel? */}
             <fieldset className="p-4 border border-gray-700 rounded-md">
-              <label className="block text-lg font-medium text-white">
+              <label className="block text-lg font-medium text-black">
                 Cargar Excel
               </label>
               <input
                 type="file"
                 accept=".xls,.xlsx"
                 onChange={handleFileChange}
-                className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
+                className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black border border-gray-400 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm"
               />
             </fieldset>
 
             <div>
               <button
                 type="submit"
-                className="w-full rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                className="w-full rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
               >
                 Enviar Solicitud
               </button>
