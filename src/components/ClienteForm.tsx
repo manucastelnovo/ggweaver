@@ -1,5 +1,6 @@
 "use client";
 import calcularCalificacionFinal from "@/useCases/calificacion";
+import { generatePDF } from "@/useCases/generarPdf";
 import { useState } from "react";
 import * as XLSX from "xlsx";
 
@@ -36,6 +37,25 @@ export default function ClienteForm() {
       debt,
       parseInt(data.cuota)
     );
+    generatePDF({
+      nombre: data.nombre_apellido,
+      fechaNacimiento: "No especificada",
+      profesion: data.perfil_comercial,
+      empresa: data.empresa,
+      ingresos: `Gs. ${data.ingresos}`,
+      perfilComercial: data.perfil_comercial,
+      producto: data.producto,
+      montoSolicitado: `Gs. ${data.monto_solicitado}`,
+      plazo: data.plazo_meses,
+      cuota: `Gs. ${data.cuota}`,
+      garantia: data.tipo_garantia,
+      scoring: data.faja_scoring_inforconf,
+      deudaFinanciera: `Gs. ${debt}`,
+      ratioDeudaIngresos: (debt / parseInt(data.ingresos)).toFixed(2),
+      puntaje: response.puntajeTotal.toString(),
+      dictamen: response.recomendacion,
+      comentarios: "asdasdasdad",
+    });
     alert(
       `Recomendacion:${response.recomendacion}, \nCalificacion: ${response.puntajeTotal}`
     );
