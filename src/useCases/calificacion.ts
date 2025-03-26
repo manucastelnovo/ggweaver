@@ -1,5 +1,5 @@
 // Función para calcular el puntaje de edad
-export function calcularPuntajeEdad(edad: number): number {
+function calcularPuntajeEdad(edad: number): number {
   if (edad >= 20 && edad <= 25) {
     return 5;
   } else if (edad >= 26 && edad <= 35) {
@@ -14,35 +14,48 @@ export function calcularPuntajeEdad(edad: number): number {
 }
 
 // Función para calcular el puntaje de ingresos
-export function calcularPuntajeIngresos(ingresos: number): number {
+function calcularPuntajeIngresos(ingresos: number): number {
   if (ingresos < 3000000) {
     return 5;
   } else if (ingresos >= 3000000 && ingresos < 5000000) {
     return 10;
   } else if (ingresos >= 5000000 && ingresos <= 10000000) {
     return 15;
-  } else { // ingresos > 10000000
+  } else {
+    // ingresos > 10000000
     return 20;
   }
 }
 
-// Función para calcular el puntaje de faja
-export function calcularPuntajeFaja(faja: string): number {
-  const fajaDict: { [key: string]: number } = { "M-N": 5, "I-L": 10, "E-H": 15, "A-D": 20 };
-  const letra = faja.toUpperCase();
+function calcularPuntajeFaja(letra: string): number {
+  letra = letra.toUpperCase(); // Convertir la letra a mayúscula para consistencia
 
-  for (const rango in fajaDict) {
-    const [inicio, fin] = rango.split("-");
-    // Comparación de caracteres de forma lexicográfica
-    if (inicio <= letra && letra <= fin) {
-      return fajaDict[rango];
-    }
+  switch (letra) {
+    case 'A':
+    case 'B':
+    case 'C':
+    case 'D':
+      return 20;
+    case 'E':
+    case 'F':
+    case 'G':
+    case 'H':
+      return 15;
+    case 'I':
+    case 'J':
+    case 'K':
+    case 'L':
+      return 10;
+    case 'M':
+    case 'N':
+      return 5;
+    default:
+      return 0;
   }
-  return 0; // Retorna 0 si no pertenece a ningún rango
 }
 
 // Función para calcular el puntaje de antigüedad laboral
-export function calcularPuntajeAntiguedad(antiguedad: string): number {
+function calcularPuntajeAntiguedad(antiguedad: string): number {
   const puntajes: { [key: string]: number } = {
     "6 meses a un año": 5,
     "1 a 2 años": 10,
@@ -53,18 +66,18 @@ export function calcularPuntajeAntiguedad(antiguedad: string): number {
 }
 
 // Función para calcular el puntaje de activos
-export function calcularPuntajeActivos(activos: string): number {
+function calcularPuntajeActivos(activos: string): number {
   const activosDict: { [key: string]: number } = {
-    "ninguno": 5,
-    "vehículo": 10,
-    "inmueble": 15,
+    ninguno: 5,
+    vehículo: 10,
+    inmueble: 15,
     "vehículo e inmueble": 20,
   };
   return activosDict[activos.toLowerCase()] || 0;
 }
 
 // Función para calcular el DTI (ratio deuda/ingreso)
-export function calcularDTI(deudas: number, ingresos: number, cuota: number): number {
+function calcularDTI(deudas: number, ingresos: number, cuota: number): number {
   if (ingresos === 0) {
     return 0;
   }
@@ -72,7 +85,7 @@ export function calcularDTI(deudas: number, ingresos: number, cuota: number): nu
 }
 
 // Función para calcular el puntaje de ratio deuda/ingreso (DTI)
-export function calcularPuntajeDTI(dti: number): number {
+function calcularPuntajeDTI(dti: number): number {
   if (dti > 50) {
     return 5;
   } else if (dti >= 40 && dti <= 49) {
@@ -87,7 +100,7 @@ export function calcularPuntajeDTI(dti: number): number {
 }
 
 // Función para calcular la calificación final
-export function calcularCalificacionFinal(
+export default function calcularCalificacionFinal(
   edad: number,
   ingresos: number,
   faja: string,
@@ -97,20 +110,23 @@ export function calcularCalificacionFinal(
   cuota: number
 ): { puntajeTotal: number; recomendacion: string } {
   const ponderaciones = {
-    edad: 0.10,
-    ingresos: 0.20,
-    faja: 0.20,
-    antiguedad: 0.10,
-    activos: 0.20,
-    dti: 0.20,
+    edad: 0.1,
+    ingresos: 0.2,
+    faja: 0.2,
+    antiguedad: 0.1,
+    activos: 0.2,
+    dti: 0.2,
   };
 
   // Calcular puntajes ponderados
   const puntajeEdad = calcularPuntajeEdad(edad) * ponderaciones.edad;
-  const puntajeIngresos = calcularPuntajeIngresos(ingresos) * ponderaciones.ingresos;
+  const puntajeIngresos =
+    calcularPuntajeIngresos(ingresos) * ponderaciones.ingresos;
   const puntajeFaja = calcularPuntajeFaja(faja) * ponderaciones.faja;
-  const puntajeAntiguedad = calcularPuntajeAntiguedad(antiguedad) * ponderaciones.antiguedad;
-  const puntajeActivos = calcularPuntajeActivos(activos) * ponderaciones.activos;
+  const puntajeAntiguedad =
+    calcularPuntajeAntiguedad(antiguedad) * ponderaciones.antiguedad;
+  const puntajeActivos =
+    calcularPuntajeActivos(activos) * ponderaciones.activos;
   const dti = calcularDTI(deudas, ingresos, cuota);
   const puntajeDTI = calcularPuntajeDTI(dti) * ponderaciones.dti;
 
@@ -134,34 +150,4 @@ export function calcularCalificacionFinal(
   }
 
   return { puntajeTotal, recomendacion };
-}
-
-// Ejemplo de uso
-if (require.main === module) {
-  const edad = 38;
-  const ingresos = 15000000;
-  const faja = "A";
-  const antiguedad = "3 a 5 años";
-  const activos = "Vehículo e Inmueble";
-  const deudas = 3360000;
-  const cuota = 416000;
-
-  const { puntajeTotal, recomendacion } = calcularCalificacionFinal(
-    edad,
-    ingresos,
-    faja,
-    antiguedad,
-    activos,
-    deudas,
-    cuota
-  );
-
-  console.log(`Puntaje Final: ${puntajeTotal}`);
-  console.log(`Dictamen Final: ${recomendacion}`);
-  console.log(`Puntaje edad: ${calcularPuntajeEdad(edad)}`);
-  console.log(`Puntaje ingresos: ${calcularPuntajeIngresos(ingresos)}`);
-  console.log(`Puntaje faja: ${calcularPuntajeFaja(faja)}`);
-  console.log(`Puntaje antiguedad: ${calcularPuntajeAntiguedad(antiguedad)}`);
-  console.log(`Puntaje Activos: ${calcularPuntajeActivos(activos)}`);
-  console.log(`Puntaje DTI: ${calcularPuntajeDTI(calcularDTI(deudas, ingresos, cuota))}`);
 }
