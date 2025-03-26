@@ -1,10 +1,11 @@
 "use client";
+import calcularCalificacionFinal from "@/useCases/calificacion";
 import { useState } from "react";
 import * as XLSX from "xlsx";
 
 export default function ClienteForm() {
   const [tipoPersona, setTipoPersona] = useState("Fisica");
-
+  const [fileData, setfileData] = useState([]);
   const handleTipoPersonaChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -15,8 +16,29 @@ export default function ClienteForm() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    const entries = Array.from(formData.entries()).map(([key, value]) => [
+      key,
+      String(value),
+    ]);
+    const data = Object.fromEntries(entries) as { [key: string]: string };
+    const debt = fileData.reduce(
+      (previousValue, current) => previousValue + current["Valor cuota"],
+      0
+    );
+
     console.log(JSON.stringify(data, null, 2));
+    const response = calcularCalificacionFinal(
+      parseInt(data.edad),
+      parseInt(data.ingresos),
+      data.faja_scoring_inforconf,
+      data.antiguedad_laboral,
+      data.posee_bienes,
+      debt,
+      parseInt(data.cuota)
+    );
+    alert(
+      `Recomendacion:${response.recomendacion}, \nCalificacion: ${response.puntajeTotal}`
+    );
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,8 +55,9 @@ export default function ClienteForm() {
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       // Convierte la hoja a JSON
-      const data = XLSX.utils.sheet_to_json(worksheet);
+      const data = XLSX.utils.sheet_to_json(worksheet) as [];
       console.log("Datos del Excel:", data);
+      setfileData(data);
     };
     reader.readAsBinaryString(file);
   };
